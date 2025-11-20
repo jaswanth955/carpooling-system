@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Driver - Carpooling</title>
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="notificationContainer" class="fixed-top p-3" style="z-index: 1050;"></div>
+  <header class="topbar navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Driver Panel</a>
+      <div class="d-flex gap-2">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="logoutBtn nav-link" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section class="card mb-3 p-3">
+      <h2>Post a Ride</h2>
+      <form id="postRideForm">
+        <div class="mb-3">
+          <label class="form-label">Origin (place name)</label>
+          <input class="form-control" type="text" id="origin_name" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Destination (place name)</label>
+          <input class="form-control" type="text" id="dest_name" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Depart time</label>
+          <input class="form-control" type="datetime-local" id="depart_time" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Total seats</label>
+          <input class="form-control" type="number" id="total_seats" min="1" value="3">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Price per seat</label>
+          <input class="form-control" type="number" id="price_per_seat" min="0" step="0.5" value="0">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Car Company</label>
+          <input class="form-control" type="text" id="vehicle_company" placeholder="e.g. Toyota" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Car Model</label>
+          <input class="form-control" type="text" id="vehicle_model" placeholder="e.g. Innova" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Safety Rating (0-5)</label>
+          <input class="form-control" type="number" id="vehicle_safety" min="0" max="5" step="0.1" value="4.5">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Preferences (comma separated, e.g. smoking=false,pets=true)</label>
+          <input class="form-control" type="text" id="preferences">
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Post Ride</button>
+        </div>
+        <p id="postMsg" class="muted mt-2"></p>
+      </form>
+    </section>
+
+    <section class="card mb-3 p-3">
+      <h3>Your Rides</h3>
+      <div id="myRides"></div>
+    </section>
+  </main>
+
+  <!-- Confirmation Modal for Marking Ride as Reached -->
+  <div class="modal fade" id="confirmReachedModal" tabindex="-1" aria-labelledby="confirmReachedLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmReachedLabel">Confirm Ride Completion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Mark this ride as "Destination Reached" and complete? This will enable passengers to rate you.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="confirmReachedBtn">Yes, Mark as Reached</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="ride.js"></script>
+  <script src="auth.js"></script>
+  <script src="bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

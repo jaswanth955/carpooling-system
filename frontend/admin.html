@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Carpooling</title>
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="notificationContainer" class="fixed-top p-3" style="z-index: 1050;"></div>
+  <header class="topbar navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Admin Dashboard</a>
+      <div class="d-flex gap-2">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="logoutBtn nav-link" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section class="card mb-3 p-3">
+      <h2>Summary</h2>
+      <div id="summary" class="grid stats"></div>
+      </section>
+
+    <section class="card mb-3 p-3">
+      <h3>All Users</h3>
+      <div id="usersTable"></div>
+    </section>
+
+    <section class="card mb-3 p-3">
+      <h3>All Rides</h3>
+      <div id="ridesTable"></div>
+    </section>
+  </main>
+
+  <!-- Custom Confirmation Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Confirm Action</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="confirmationModalBody">
+          Are you sure you want to proceed?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="confirmActionBtn">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <script src="ride.js"></script>
+  <script src="bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

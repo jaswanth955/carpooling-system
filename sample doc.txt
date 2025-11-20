@@ -1,0 +1,740 @@
+<!--
+Project: Carpooling Frontend (MVP)
+Files included below. Save each section into its own file (filename indicated).
+Open index.html in a browser to run the prototype.
+This is a simple front-end prototype using localStorage to simulate backend.
+-->
+
+<!-- ===== filename: index.html ===== -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Carpooling - Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoYz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Carpooling MVP</a>
+      <div class="d-flex gap-2">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="login.html">Login</a>
+        <a class="nav-link" href="signup.html">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section class="card mb-3 p-3">
+      <h2>Welcome</h2>
+      <p>Build and test a simple carpooling front‑end. Use the links above to sign up and log in as <strong>admin</strong>, <strong>driver</strong>, or <strong>user</strong>.</p>
+      <p>Sample admin credentials are created on first load: <code>jaswanth@gmail.com / 123456</code></p>
+      <div class="d-flex gap-2">
+        <a class="btn btn-primary" href="signup.html">Create Account</a>
+        <a class="btn btn-outline-primary" href="login.html">Login</a>
+      </div>
+    </section>
+
+    <section class="card small mb-3 p-3">
+      <h3>Notes</h3>
+      <ul>
+        <li>All data saved to <code>localStorage</code> — no backend required.</li>
+        <li>Roles: <code>admin</code>, <code>driver</code>, <code>user</code>.</li>
+        <li>Offline payment flow is simulated: bookings are stored with <code>paymentMode: 'offline'</code>.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="foot text-center py-3">&copy; Carpooling MVP</footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>
+
+
+<!-- ===== filename: login.html ===== -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - Carpooling</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoYz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Carpooling</a>
+      <div class="d-flex gap-2">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="signup.html">Sign up</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section class="card mb-3 p-3 mx-auto" style="max-width:600px">
+      <form id="loginForm">
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input class="form-control" type="email" id="email" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input class="form-control" type="password" id="password" required>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Login</button>
+          <a class="btn btn-outline-primary" href="signup.html">Create account</a>
+        </div>
+        <p id="loginMsg" class="muted mt-2"></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>
+
+
+<!-- ===== filename: signup.html ===== -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign Up - Carpooling</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoYz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Carpooling</a>
+      <div class="d-flex gap-2">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="login.html">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section class="card mb-3 p-3 mx-auto" style="max-width:700px">
+      <form id="signupForm">
+        <div class="mb-3">
+          <label class="form-label">Full name</label>
+          <input class="form-control" type="text" id="name" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input class="form-control" type="email" id="email" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input class="form-control" type="password" id="password" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Role</label>
+          <select class="form-select" id="role">
+            <option value="user">User</option>
+            <option value="driver">Driver</option>
+          </select>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Create account</button>
+          <a class="btn btn-outline-primary" href="login.html">Already have an account?</a>
+        </div>
+        <p id="signupMsg" class="muted mt-2"></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>
+
+
+<!-- ===== filename: admin.html ===== -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Carpooling</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoYz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Admin Dashboard</a>
+      <div class="d-flex gap-2">
+        <a class="nav-link" href="index.html">Home</a>
+        <a id="logoutBtn" class="nav-link" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section class="card mb-3 p-3">
+      <h2>Summary</h2>
+      <div id="summary" class="grid stats"></div>
+      <div class="mt-3 d-flex gap-2 align-items-center">
+        <button class="btn btn-outline-primary" id="resetDataBtn" onclick="resetData()">Reset Data</button>
+        <span class="smalltext">Reset clears users (except admin), rides and bookings — useful for demos.</span>
+      </div>
+    </section>
+
+    <section class="card mb-3 p-3">
+      <h3>All Users</h3>
+      <div id="usersTable"></div>
+    </section>
+
+    <section class="card mb-3 p-3">
+      <h3>All Rides</h3>
+      <div id="ridesTable"></div>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>
+
+
+<!-- ===== filename: driver.html ===== -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Driver - Carpooling</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoYz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Driver Panel</a>
+      <div class="d-flex gap-2">
+        <a class="nav-link" href="index.html">Home</a>
+        <a id="logoutBtn" class="nav-link" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section class="card mb-3 p-3">
+      <h2>Post a Ride</h2>
+      <form id="postRideForm">
+        <div class="mb-3">
+          <label class="form-label">Origin (place name)</label>
+          <input class="form-control" type="text" id="origin_name" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Destination (place name)</label>
+          <input class="form-control" type="text" id="dest_name" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Depart time</label>
+          <input class="form-control" type="datetime-local" id="depart_time" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Total seats</label>
+          <input class="form-control" type="number" id="total_seats" min="1" value="3">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Price per seat</label>
+          <input class="form-control" type="number" id="price_per_seat" min="0" step="0.5" value="0">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Car Company</label>
+          <input class="form-control" type="text" id="vehicle_company" placeholder="e.g. Toyota" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Car Model</label>
+          <input class="form-control" type="text" id="vehicle_model" placeholder="e.g. Innova" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Safety Rating (0-5)</label>
+          <input class="form-control" type="number" id="vehicle_safety" min="0" max="5" step="0.1" value="4.5">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Preferences (comma separated, e.g. smoking=false,pets=true)</label>
+          <input class="form-control" type="text" id="preferences">
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Post Ride</button>
+        </div>
+        <p id="postMsg" class="muted mt-2"></p>
+      </form>
+    </section>
+
+    <section class="card mb-3 p-3">
+      <h3>Your Rides</h3>
+      <div id="myRides"></div>
+    </section>
+  </main>
+
+  <script src="rides.js"></script>
+  <script src="auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>
+
+
+<!-- ===== filename: user.html ===== -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>User - Carpooling</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ENjdO4Dr2bkBIFxQpeoYz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">User Panel</a>
+      <div class="d-flex gap-2">
+        <a class="nav-link" href="index.html">Home</a>
+        <a id="logoutBtn" class="nav-link" href="#">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section class="card mb-3 p-3">
+      <h2>Search Rides</h2>
+      <form id="searchForm">
+        <div class="mb-3">
+          <label class="form-label">Origin</label>
+          <input class="form-control" type="text" id="search_origin" placeholder="place name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Destination</label>
+          <input class="form-control" type="text" id="search_dest" placeholder="place name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Date</label>
+          <input class="form-control" type="date" id="search_date">
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card mb-3 p-3">
+      <h3>Available Rides</h3>
+      <div id="results"></div>
+    </section>
+
+    <section class="card mb-3 p-3">
+      <h3>My Bookings</h3>
+      <div id="myBookings"></div>
+    </section>
+  </main>
+
+  <script src="rides.js"></script>
+  <script src="auth.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="main.js"></script>
+</body>
+</html>
+
+
+<!-- ===== filename: styles.css ===== -->
+/* Simple clean styles for prototype */
+:root{--bg:#f6f8fb;--card:#fff;--accent:#0b66ff;--muted:#666}
+*{box-sizing:border-box;font-family:Inter,system-ui,Arial, sans-serif}
+body{margin:0;background:var(--bg);color:#111}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#fff;border-bottom:1px solid #e6eefb}
+.topbar h1{margin:0;font-size:18px}
+.topbar nav a{margin-left:12px;color:var(--accent);text-decoration:none}
+.container{max-width:960px;margin:28px auto;padding:0 16px}
+.card{background:var(--card);padding:18px;border-radius:10px;box-shadow:0 4px 18px rgba(11,102,255,0.06);margin-bottom:16px}
+.card.small{max-width:420px}
+label{display:block;margin-bottom:10px}
+input,select,textarea{width:100%;padding:8px;margin-top:6px;border:1px solid #dfe8ff;border-radius:6px}
+.btn{display:inline-block;padding:10px 14px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;border:none;cursor:pointer}
+.btn.outline{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.grid{display:flex;gap:10px;align-items:center}
+.muted{color:var(--muted);margin-top:8px}
+.stats{grid-template-columns:repeat(4,1fr);display:grid;gap:10px}
+.foot{padding:14px;text-align:center;color:#666}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:8px;border-bottom:1px solid #eef5ff;text-align:left}
+.smalltext{font-size:13px;color:#666}
+
+/* responsive */
+@media (max-width:700px){.grid{flex-direction:column}.stats{grid-template-columns:repeat(2,1fr)}}
+
+
+<!-- ===== filename: main.js ===== -->
+// main.js - common helpers
+(function(){
+  // ensure admin user and sample data exist (fixes "invalid email or password" when users exist from prior runs)
+  (function ensureAdmin(){
+    const users = JSON.parse(localStorage.getItem('users')||'[]');
+    // add admin if missing
+    if(!users.find(u=>u.email==='jaswanth@gmail.com')){
+      const id = users.length ? Math.max(...users.map(u=>u.id))+1 : 1;
+      users.push({id,name:'Jaswanth',email:'jaswanth@gmail.com',password:'123456',role:'admin'});
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+    if(!localStorage.getItem('rides')) localStorage.setItem('rides', JSON.stringify([]));
+    if(!localStorage.getItem('bookings')) localStorage.setItem('bookings', JSON.stringify([]));
+    localStorage.setItem('initialized', '1');
+  })();
+
+  // expose small helper globally
+  window.app = {
+    getUsers: ()=> JSON.parse(localStorage.getItem('users')||'[]'),
+    saveUsers: (u)=> localStorage.setItem('users', JSON.stringify(u)),
+    getRides: ()=> JSON.parse(localStorage.getItem('rides')||'[]'),
+    saveRides: (r)=> localStorage.setItem('rides', JSON.stringify(r)),
+    getBookings: ()=> JSON.parse(localStorage.getItem('bookings')||'[]'),
+    saveBookings: (b)=> localStorage.setItem('bookings', JSON.stringify(b)),
+    currentUser: ()=> JSON.parse(sessionStorage.getItem('currentUser')||'null'),
+    setCurrentUser: (u)=> sessionStorage.setItem('currentUser', JSON.stringify(u)),
+    logout: ()=> {sessionStorage.removeItem('currentUser'); window.location='index.html';}
+  };
+
+  // auto-redirect to panels if already logged in
+  const cur = app.currentUser();
+  if(cur){
+    const path = window.location.pathname.split('/').pop();
+    if(path === 'index.html' || path === ''){
+      if(cur.role === 'admin') window.location='admin.html';
+      else if(cur.role === 'driver') window.location='driver.html';
+      else window.location='user.html';
+    }
+  }
+
+  // attach logout buttons
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const btns = document.querySelectorAll('#logoutBtn');
+    btns.forEach(b=> b.addEventListener('click', (e)=>{ e.preventDefault(); app.logout(); }));
+  });
+})();
+
+
+<!-- ===== filename: auth.js ===== -->
+// auth.js - signup & login logic (uses localStorage + sessionStorage)
+document.addEventListener('DOMContentLoaded', ()=>{
+  const signupForm = document.getElementById('signupForm');
+  const loginForm = document.getElementById('loginForm');
+
+  if(signupForm){
+    signupForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const role = document.getElementById('role').value;
+      const users = app.getUsers();
+      if(users.find(u=>u.email===email)){
+        document.getElementById('signupMsg').textContent = 'Email already registered';
+        return;
+      }
+      const id = users.length ? Math.max(...users.map(u=>u.id))+1 : 1;
+      const user = {id,name,email,password,role};
+      users.push(user);
+      app.saveUsers(users);
+      app.setCurrentUser(user);
+      // redirect based on role
+      if(role==='admin') window.location='admin.html';
+      else if(role==='driver') window.location='driver.html';
+      else window.location='user.html';
+    });
+  }
+
+  if(loginForm){
+    loginForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim().toLowerCase();
+      const password = document.getElementById('password').value;
+      const users = app.getUsers();
+      const user = users.find(u=>u.email===email && u.password===password);
+      const msg = document.getElementById('loginMsg');
+      if(!user){ msg.textContent = 'Invalid email or password'; return; }
+      app.setCurrentUser(user);
+      if(user.role==='admin') window.location='admin.html';
+      else if(user.role==='driver') window.location='driver.html';
+      else window.location='user.html';
+    });
+  }
+});
+
+
+<!-- ===== filename: rides.js ===== -->
+// rides.js - posting rides, searching, booking
+// Cleaned up: removed duplicated/misplaced blocks and ensured proper function scopes.
+document.addEventListener('DOMContentLoaded', ()=>{
+  const postRideForm = document.getElementById('postRideForm');
+  const myRidesDiv = document.getElementById('myRides');
+  const searchForm = document.getElementById('searchForm');
+  const resultsDiv = document.getElementById('results');
+  const myBookingsDiv = document.getElementById('myBookings');
+
+  const cur = app.currentUser();
+  if(!cur){
+    // if on pages that require auth, redirect to login
+    const path = window.location.pathname.split('/').pop();
+    if(['admin.html','driver.html','user.html'].includes(path)){
+      window.location='login.html';
+      return;
+    }
+  }
+
+  // driver: post ride
+  if(postRideForm){
+    postRideForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      try{
+        const origin = document.getElementById('origin_name').value.trim();
+        const dest = document.getElementById('dest_name').value.trim();
+        const depart_time = document.getElementById('depart_time').value;
+        const total_seats = parseInt(document.getElementById('total_seats').value,10)||1;
+        const price_per_seat = parseFloat(document.getElementById('price_per_seat').value)||0;
+        const vehicle_company = (document.getElementById('vehicle_company') || {value:''}).value.trim();
+        const vehicle_model = (document.getElementById('vehicle_model') || {value:''}).value.trim();
+        const vehicle_safety = parseFloat((document.getElementById('vehicle_safety') || {value:0}).value)||0;
+        const prefsRaw = (document.getElementById('preferences') || {value:''}).value.trim();
+        const prefs = {};
+        if(prefsRaw){ prefsRaw.split(',').forEach(p=>{ const [k,v]=p.split('='); if(k) prefs[k.trim()]= (v||'').trim(); }); }
+
+        const rides = app.getRides();
+        const id = rides.length ? Math.max(...rides.map(r=>r.id))+1 : 1;
+        const ride = {
+          id,
+          driver_id: cur.id,
+          origin_name: origin,
+          dest_name: dest,
+          depart_time: depart_time,
+          total_seats,
+          seats_available: total_seats,
+          price_per_seat,
+          preferences: prefs,
+          status:'open',
+          created_at: new Date().toISOString(),
+          vehicle: { company: vehicle_company, model: vehicle_model, safety_rating: vehicle_safety }
+        };
+        rides.push(ride);
+        app.saveRides(rides);
+        document.getElementById('postMsg').textContent = 'Ride posted!';
+        postRideForm.reset();
+        renderMyRides();
+      }catch(err){
+        console.error('Error posting ride', err);
+        document.getElementById('postMsg').textContent = 'Failed to post ride';
+      }
+    });
+  }
+
+  function renderMyRides(){
+    if(!myRidesDiv) return;
+    const rides = app.getRides().filter(r=>r.driver_id===cur.id);
+    if(!rides.length){ myRidesDiv.innerHTML='<p class="smalltext">No rides posted yet.</p>'; return; }
+    let html = '<table class="table"><tr><th>From</th><th>To</th><th>Depart</th><th>Vehicle</th><th>Seats</th><th>Price</th><th>Actions</th></tr>';
+    rides.forEach(r=>{
+      const vehicleInfo = r.vehicle ? ${r.vehicle.company} ${r.vehicle.model} (${r.vehicle.safety_rating}) : (r.vehicle_info||'');
+      html += <tr><td>${r.origin_name}</td><td>${r.dest_name}</td><td>${new Date(r.depart_time).toLocaleString()}</td><td>${vehicleInfo}</td><td>${r.seats_available}/${r.total_seats}</td><td>${r.price_per_seat}</td><td><button class="btn btn-outline-primary" data-id="${r.id}" onclick="cancelRide(${r.id})">Cancel</button></td></tr>;
+    });
+    html += '</table>';
+    myRidesDiv.innerHTML = html;
+  }
+
+  window.cancelRide = function(id){
+    const rides = app.getRides();
+    const ride = rides.find(r=>r.id===id);
+    if(!ride) return alert('Ride not found');
+    if(!confirm('Cancel this ride?')) return;
+    ride.status = 'cancelled';
+    app.saveRides(rides);
+    renderMyRides();
+  }
+
+  // user: search rides
+  if(searchForm){
+    searchForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const origin = document.getElementById('search_origin').value.trim().toLowerCase();
+      const dest = document.getElementById('search_dest').value.trim().toLowerCase();
+      const date = document.getElementById('search_date').value; // YYYY-MM-DD
+      const rides = app.getRides().filter(r=> r.status==='open' && r.seats_available>0);
+      const results = rides.filter(r=>{
+        const matchOrigin = origin? r.origin_name.toLowerCase().includes(origin) : true;
+        const matchDest = dest? r.dest_name.toLowerCase().includes(dest) : true;
+        const matchDate = date? (new Date(r.depart_time).toISOString().slice(0,10)===date) : true;
+        return matchOrigin && matchDest && matchDate;
+      });
+      renderResults(results);
+    });
+  }
+
+  function renderResults(results){
+    if(!resultsDiv) return;
+    if(!results.length){ resultsDiv.innerHTML = '<p class="smalltext">No rides found.</p>'; return; }
+    let html = '';
+    results.forEach(r=>{
+      const driver = app.getUsers().find(u=>u.id===r.driver_id) || {name:'Driver'};
+      const vinfo = r.vehicle ? ${r.vehicle.company} ${r.vehicle.model} (${r.vehicle.safety_rating}) : (r.vehicle_info||'');
+      html += <div class="card mb-2 p-2"><strong>${r.origin_name} → ${r.dest_name}</strong><div class="smalltext">Depart: ${new Date(r.depart_time).toLocaleString()} | Seats: ${r.seats_available} | Price: ${r.price_per_seat}</div><div style="margin-top:8px"><button class="btn btn-primary" onclick="bookRide(${r.id})">Book</button></div><div class="smalltext">Driver: ${driver.name} (${driver.email})</div><div class="smalltext">Vehicle: ${vinfo}</div></div>;
+    });
+    resultsDiv.innerHTML = html;
+  }
+
+  window.bookRide = function(rideId){
+    const cur = app.currentUser();
+    if(!cur) return window.location='login.html';
+    const rides = app.getRides();
+    const ride = rides.find(r=>r.id===rideId);
+    if(!ride) return alert('Ride not found');
+    if(ride.seats_available<=0) return alert('No seats available');
+    const bookings = app.getBookings();
+    const id = bookings.length ? Math.max(...bookings.map(b=>b.id))+1 : 1;
+    const booking = {id, ride_id: rideId, passenger_id: cur.id, seats_booked:1, status:'confirmed', paymentMode:'offline', created_at: new Date().toISOString()};
+    bookings.push(booking);
+    app.saveBookings(bookings);
+    // decrement seats in rides
+    ride.seats_available -= 1; app.saveRides(rides);
+    alert('Booked! Payment: Offline');
+    // refresh UI
+    if(document.getElementById('results')) document.getElementById('results').innerHTML = '';
+    renderMyBookings();
+  }
+
+  function renderMyBookings(){
+    if(!myBookingsDiv) return;
+    const cur = app.currentUser();
+    const bookings = app.getBookings().filter(b=>b.passenger_id===cur.id);
+    if(!bookings.length) { myBookingsDiv.innerHTML = '<p class="smalltext">No bookings yet.</p>'; return; }
+    let html = '<table class="table"><tr><th>Ride</th><th>When</th><th>Status</th><th>Action</th></tr>';
+    bookings.forEach(b=>{
+      const ride = app.getRides().find(r=>r.id===b.ride_id) || {};
+      html += <tr><td>${ride.origin_name} → ${ride.dest_name}</td><td>${new Date(ride.depart_time).toLocaleString()}</td><td>${b.status}</td><td><button class="btn btn-outline-primary" onclick="cancelBooking(${b.id})">Cancel</button></td></tr>;
+    });
+    html += '</table>';
+    myBookingsDiv.innerHTML = html;
+  }
+
+  window.cancelBooking = function(id){
+    if(!confirm('Cancel booking?')) return;
+    const bookings = app.getBookings();
+    const b = bookings.find(x=>x.id===id);
+    if(!b) return alert('Booking not found');
+    b.status = 'cancelled';
+    app.saveBookings(bookings);
+    // return seat
+    const rides = app.getRides();
+    const ride = rides.find(r=>r.id===b.ride_id);
+    if(ride){ ride.seats_available += b.seats_booked; app.saveRides(rides); }
+    renderMyBookings();
+  }
+
+  // admin summary rendering
+  if(document.getElementById('summary')){
+    const users = app.getUsers();
+    const rides = app.getRides();
+    const bookings = app.getBookings();
+    const summary = document.getElementById('summary');
+    summary.innerHTML = <div class="card"><strong>Users</strong><div class="smalltext">${users.length}</div></div><div class="card"><strong>Rides</strong><div class="smalltext">${rides.length}</div></div><div class="card"><strong>Bookings</strong><div class="smalltext">${bookings.length}</div></div><div class="card"><strong>Cancellations</strong><div class="smalltext">${bookings.filter(b=>b.status==='cancelled').length}</div></div>;
+
+    // users table
+    const usersTable = document.getElementById('usersTable');
+    let uhtml = '<table class="table"><tr><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>';
+    users.forEach(u=> {
+      const safeDelete = (u.email==='jaswanth@gmail.com') ? '' : <button class="btn btn-outline-primary" onclick="deleteUser(${u.id})">Delete</button>;
+      uhtml += <tr><td>${u.name}</td><td>${u.email}</td><td>${u.role}</td><td>${safeDelete}</td></tr>;
+    });
+    uhtml += '</table>'; usersTable.innerHTML = uhtml;
+
+    // rides table
+    const ridesTable = document.getElementById('ridesTable');
+    let rhtml = '<table class="table"><tr><th>Driver</th><th>From → To</th><th>Depart</th><th>Vehicle</th><th>Seats</th><th>Status</th><th>Actions</th></tr>';
+    rides.forEach(r=>{
+      const driver = users.find(u=>u.id===r.driver_id) || {};
+      const vinfo = r.vehicle ? ${r.vehicle.company} ${r.vehicle.model} (${r.vehicle.safety_rating}) : (r.vehicle_info||'');
+      rhtml += <tr><td>${driver.name||''}</td><td>${r.origin_name} → ${r.dest_name}</td><td>${new Date(r.depart_time).toLocaleString()}</td><td>${vinfo}</td><td>${r.seats_available}/${r.total_seats}</td><td>${r.status}</td><td><button class="btn btn-outline-primary" onclick="adminCancelRide(${r.id})">Cancel</button> <button class="btn btn-outline-primary" onclick="deleteRide(${r.id})">Delete</button> <button class="btn btn-primary" onclick="viewRideBookings(${r.id})">View Bookings</button></td></tr>;
+    });
+    rhtml += '</table>'; ridesTable.innerHTML = rhtml;
+  }
+
+  // initial renders
+  renderMyRides(); renderMyBookings();
+
+  // admin helper functions (delete user, delete ride, view bookings, reset demo data)
+  window.deleteUser = function(id){
+    if(!confirm('Delete this user? This will remove their rides and bookings.')) return;
+    let users = app.getUsers();
+    const user = users.find(u=>u.id===id);
+    if(!user) return alert('User not found');
+    if(user.email==='jaswanth@gmail.com') return alert('Cannot delete admin');
+    users = users.filter(u=>u.id!==id);
+    app.saveUsers(users);
+    // remove user's rides and bookings
+    let rides = app.getRides().filter(r=> r.driver_id !== id);
+    app.saveRides(rides);
+    let bookings = app.getBookings().filter(b=> b.passenger_id !== id);
+    app.saveBookings(bookings);
+    location.reload();
+  }
+
+  window.deleteRide = function(id){
+    if(!confirm('Delete this ride?')) return;
+    let rides = app.getRides();
+    rides = rides.filter(r=> r.id !== id);
+    app.saveRides(rides);
+    // remove related bookings
+    let bookings = app.getBookings().filter(b=> b.ride_id !== id);
+    app.saveBookings(bookings);
+    location.reload();
+  }
+
+  window.adminCancelRide = function(id){
+    const rides = app.getRides();
+    const ride = rides.find(r=>r.id===id);
+    if(!ride) return alert('Ride not found');
+    if(!confirm('Cancel this ride?')) return;
+    ride.status = 'cancelled';
+    app.saveRides(rides);
+    // set related bookings to cancelled
+    const bookings = app.getBookings();
+    bookings.forEach(b=>{ if(b.ride_id===id) b.status='cancelled'; });
+    app.saveBookings(bookings);
+    location.reload();
+  }
+
+  window.viewRideBookings = function(rideId){
+    const bookings = app.getBookings().filter(b=> b.ride_id===rideId);
+    if(!bookings.length) return alert('No bookings for this ride');
+    let msg = 'Bookings:\n';
+    bookings.forEach(b=>{
+      const user = app.getUsers().find(u=>u.id===b.passenger_id) || {};
+      msg += - ${user.name||user.email} | Seats: ${b.seats_booked} | Status: ${b.status}\n;
+    });
+    alert(msg);
+  }
+
+  window.resetData = function(){
+    if(!confirm('Reset demo data? This will remove all users except admin, and delete all rides & bookings.')) return;
+    const users = app.getUsers().filter(u=> u.email==='jaswanth@gmail.com');
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('rides', JSON.stringify([]));
+    localStorage.setItem('bookings', JSON.stringify([]));
+    location.reload();
+  }
+});

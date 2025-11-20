@@ -1,0 +1,7 @@
+- Update CSS variables in :root to new light palette
+- Change button colors to mint green for action buttons
+- Add sky-blue background for search bars
+- Update table headers to sky-blue
+- Add mint green for status indicators (Online/Offline)
+- Adjust shadows and borders for light theme
+- Update accent to peach for warnings

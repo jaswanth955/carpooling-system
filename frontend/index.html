@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Home - Carpooling</title>
+  <link href="bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="notificationContainer" class="fixed-top p-3" style="z-index: 1050;"></div>
+  <header class="topbar navbar navbar-expand-lg navbar-light shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">Carpooling</a>
+      <div class="d-flex gap-2">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="login.html">Login</a>
+        <a class="nav-link" href="signup.html">Sign up</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <h1 class="text-center mb-4">Carpooling Platform Summary</h1>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Total Users</h5>
+            <p class="card-text display-4" id="totalUsers">Loading...</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Total Rides</h5>
+            <p class="card-text display-4" id="totalRides">Loading...</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Total Bookings</h5>
+            <p class="card-text display-4" id="totalBookings">Loading...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="bootstrap.bundle.min.js"></script>
+  <script src="home.js"></script>
+</body>
+</html>
