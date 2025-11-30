@@ -1,5 +1,3 @@
-// home.js — handles loading summary counts on the home page
-
 console.log('home.js loaded');
 
 document.addEventListener('DOMContentLoaded', async () => {

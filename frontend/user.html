@@ -6,6 +6,14 @@
   <title>User - Carpooling</title>
   <link href="bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-image: url("../3.avif");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  </style>
 </head>
 <body>
   <div id="notificationContainer" class="fixed-top p-3" style="z-index: 1050;"></div>
@@ -52,7 +60,6 @@
     </section>
   </main>
 
-  <!-- Booking Modal -->
   <div class="modal fade" id="seatBookingModal" tabindex="-1" aria-labelledby="seatBookingModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -85,7 +92,6 @@
     </div>
   </div>
 
-  <!-- Driver Details Modal -->
   <div class="modal fade" id="driverDetailsModal" tabindex="-1" aria-labelledby="driverDetailsModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -94,7 +100,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="driverDetailsContent">
-          <!-- Details will be populated here -->
         </div>
       </div>
     </div>

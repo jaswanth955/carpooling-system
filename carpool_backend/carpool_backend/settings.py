@@ -1,4 +1,3 @@
-# --- FILE START: carpool_backend/settings.py ---
 """
 Django settings for carpool_backend project.
 """
@@ -8,14 +7,12 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# WARNING: Change this in production!
 SECRET_KEY = 'django-insecure-@e^@x8v+c0w9$k2y#g0j(t(1-2r7d7%m*3#9w#n+*m^2!e^x0t' 
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*'] # Allows access during local development (http://127.0.0.1)
+ALLOWED_HOSTS = ['*']
 
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,13 +20,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',        # For building the API
-    'corsheaders',           # For allowing frontend access
-    'rideshare',             # <-- Your application app
+    'rest_framework',
+    'corsheaders',          
+    'rideshare',             
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware', # Must be highly placed
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -39,7 +36,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# CORS Configuration (Allows your frontend to talk to this backend)
 CORS_ALLOW_ALL_ORIGINS = True 
 
 ROOT_URLCONF = 'carpool_backend.urls'
@@ -62,7 +58,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'carpool_backend.wsgi.application'
 
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -70,7 +65,6 @@ DATABASES = {
     }
 }
 
-# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -79,10 +73,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]
 }
-# --- FILE END: carpool_backend/settings.py ---

@@ -1,26 +1,18 @@
-# --- FILE START: rideshare/models.py ---
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-# Extend User model for role and vehicle info
 class UserProfile(models.Model):
-    # Link the profile to the default Django User model (handles username/password/email)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     
-    # Custom fields from your frontend model
     ROLE_CHOICES = [
         ('user', 'User'),
         ('driver', 'Driver'),
         ('admin', 'Admin'),
     ]
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='user')
-
-    # Phone number for contact
     phone_number = models.CharField(max_length=15, blank=True, null=True)
 
-    # Vehicle details (only relevant if role='driver')
     vehicle_company = models.CharField(max_length=100, blank=True, null=True)
     vehicle_model = models.CharField(max_length=100, blank=True, null=True)
     vehicle_safety_rating = models.DecimalField(
@@ -34,10 +26,8 @@ class UserProfile(models.Model):
         return f"{self.user.username} ({self.role})"
 
 class Ride(models.Model):
-    # Use the Django User foreign key for the driver
     driver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posted_rides')
 
-    # Ride details
     origin_name = models.CharField(max_length=255)
     dest_name = models.CharField(max_length=255)
     depart_time = models.DateTimeField()
@@ -45,7 +35,6 @@ class Ride(models.Model):
     seats_available = models.IntegerField()
     price_per_seat = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
 
-    # Vehicle details per ride
     vehicle_company = models.CharField(max_length=100, blank=True, null=True)
     vehicle_model = models.CharField(max_length=100, blank=True, null=True)
     vehicle_safety_rating = models.DecimalField(
@@ -54,29 +43,22 @@ class Ride(models.Model):
         default=0.0,
         validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
     )
-
     STATUS_CHOICES = [
         ('open', 'Open'),
         ('completed', 'Completed'),
         ('cancelled', 'Cancelled'),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='open')
-
     preferences = models.TextField(blank=True, help_text="JSON serialized preferences")
-
     created_at = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return f"{self.origin_name} to {self.dest_name} by {self.driver.username}"
 
 class Booking(models.Model):
-    # Link to the Ride and the Passenger
     ride = models.ForeignKey(Ride, on_delete=models.CASCADE, related_name='bookings')
     passenger = models.ForeignKey(User, on_delete=models.CASCADE, related_name='booked_rides')
-    
     seats_booked = models.IntegerField(validators=[MinValueValidator(1)])
-    payment_mode = models.CharField(max_length=50, default='offline') # e.g., 'offline'
-    
+    payment_mode = models.CharField(max_length=50, default='offline')    
     STATUS_CHOICES = [
         ('confirmed', 'Confirmed'),
         ('cancelled', 'Cancelled'),
@@ -84,8 +66,6 @@ class Booking(models.Model):
         ('rated', 'Rated'),
     ]
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='confirmed')
-    
-    # Rating fields
     legroom_rating = models.IntegerField(
         null=True, blank=True,
         validators=[MinValueValidator(1), MaxValueValidator(5)],
@@ -116,5 +96,3 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking {self.id} on Ride {self.ride_id} by {self.passenger.username}"
-        
-# --- FILE END: rideshare/models.py ---

@@ -20,10 +20,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
       };
       
       try {
-          // POST to Django API signup endpoint
           const response = await app.saveData('/users/signup', userData);
 
-          // The response body contains the new UserProfile object
           const fullUserData = { id: response.id, name: response.first_name, email: response.email, role: response.role };
           localStorage.setItem('currentUser', JSON.stringify(fullUserData));
           

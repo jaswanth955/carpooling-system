@@ -70,18 +70,13 @@ def logout_view(request):
 def rides_view(request):
     try:
         rides = Ride.objects.all()
-
-        # Filter by driver_id if provided
         driver_id = request.GET.get('driver_id')
         if driver_id:
             rides = rides.filter(driver_id=int(driver_id))
-
-        # Filter by status if provided and not 'all'
         status = request.GET.get('status')
         if status and status != 'all':
             rides = rides.filter(status=status)
-
-        # Filter by origin if provided (case-insensitive partial match)
+   
         origin = request.GET.get('origin')
         if origin:
             rides = rides.filter(origin_name__icontains=origin)
@@ -150,7 +145,7 @@ def book_ride_view(request):
             return JsonResponse(serializer.data, safe=False)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
-    else:  # POST
+    else:
         try:
             data = json.loads(request.body)
             ride_id = data.get('ride_id')
@@ -361,15 +356,12 @@ def ride_detail_view(request, ride_id):
             return JsonResponse(serializer.data)
         elif request.method == 'PATCH':
             data = json.loads(request.body)
-            # Update ride fields
             for field in ['status']:
                 if field in data:
                     setattr(ride, field, data[field])
             ride.save()
 
-            # Handle status changes
             if data.get('status') == 'cancelled':
-                # Cancel all confirmed bookings and return seats
                 bookings = Booking.objects.filter(ride=ride, status='confirmed')
                 for booking in bookings:
                     booking.status = 'cancelled'
@@ -377,7 +369,6 @@ def ride_detail_view(request, ride_id):
                     ride.seats_available += booking.seats_booked
                 ride.save()
             elif data.get('status') == 'completed':
-                # Set bookings to awaiting_rating
                 bookings = Booking.objects.filter(ride=ride, status='confirmed')
                 for booking in bookings:
                     booking.status = 'awaiting_rating'

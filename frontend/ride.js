@@ -1,5 +1,3 @@
-// rides.js - posting rides, searching, booking
-// NOTE: All data retrieval and saving now uses the Django REST API via the global 'app' functions.
 
 document.addEventListener('DOMContentLoaded', ()=>{
   const postRideForm = document.getElementById('postRideForm');
@@ -23,16 +21,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const BOOKINGS_ENDPOINT = '/bookings';
   const USERS_ENDPOINT = '/users';
 
-  // Helper to count confirmed bookings
   async function getConfirmedBookingCount(rideId) {
-      // Fetch bookings filtered by ride and status
       const bookings = await app.getData(BOOKINGS_ENDPOINT, { ride_id: rideId, status: 'confirmed' });
       return bookings.length;
   }
   
-  // Helper to calculate the average rating for a ride
   async function getAverageRating(rideId) {
-      // Fetch bookings filtered by ride and status
       const bookings = await app.getData(BOOKINGS_ENDPOINT, { ride_id: rideId, status: 'rated' });
 
       const ratedBookings = bookings.filter(b => b.legroom_rating || b.cleanliness_rating || b.driving_smoothness_rating || b.temperature_comfort_rating);
@@ -46,7 +40,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       return `${average} / 5 (${ratedBookings.length} reviews)`;
   }
 
-  // driver: post ride
   if(postRideForm){
     postRideForm.addEventListener('submit', async (e)=>{
       e.preventDefault();
@@ -65,7 +58,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         const preferences = (document.getElementById('preferences') || {value:''}).value.trim(); 
 
         const rideData = {
-          driver_id: cur.id, // Django expects the driver's User PK
+          driver_id: cur.id,
           origin_name: origin,
           dest_name: dest,
           depart_time: depart_time,
@@ -95,7 +88,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   async function renderMyRides(){
     if(!myRidesDiv) return;
     
-    // Fetch rides filtered by the current user's ID
     const rides = await app.getData(RIDES_ENDPOINT, { driver_id: cur.id, status: 'all' });
 
     if(!rides.length){ myRidesDiv.innerHTML='<p class="smalltext">No rides posted yet.</p>'; return; }
@@ -122,7 +114,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
           }
       })();
 
-      // DATA ROW: Get and display ride rating
       html += `<tr><td>${r.origin_name}</td><td>${r.dest_name}</td><td>${new Date(r.depart_time).toLocaleString()}</td><td>${vehicleInfo}</td><td>${r.seats_available}/${r.total_seats}</td><td>${r.price_per_seat}</td><td>${r.status}</td><td>${rideRating}</td><td>${actionButton}</td></tr>`;
       
       html += `<tr id="passengers-details-${r.id}" style="display:none;"><td colspan="9" class="p-0"></td></tr>`;
@@ -131,7 +122,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     myRidesDiv.innerHTML = html;
   }
 
-  // FEATURE: Toggles visibility of the passenger list
   window.togglePassengerDetails = async function(rideId){
       const detailRow = document.getElementById(`passengers-details-${rideId}`);
       const detailCell = detailRow ? detailRow.querySelector('td') : null;
@@ -139,7 +129,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
       if (!detailRow || !detailCell) return;
 
       if (detailRow.style.display === 'none') {
-          // Fetch all bookings for this ride
           const bookings = await app.getData(BOOKINGS_ENDPOINT, { ride_id: rideId });
           
           let confirmedBookings = bookings.filter(b => b.status === 'confirmed' || b.status === 'awaiting_rating' || b.status === 'rated');
@@ -149,9 +138,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
           } else {
               let html = '<div class="p-3"><h6 class="mb-2">Passenger Details:</h6><table class="table table-sm">';
               html += '<tr><th>Name</th><th>Email</th><th>Seats</th><th>Status</th><th>Rating</th></tr>';
-              
-              // We rely on the embedded 'passenger' object in the booking serializer
-              // No need to fetch all users globally
 
               confirmedBookings.forEach(b => {
                   const user = b.passenger || {name: 'Unknown', email: 'N/A'};
@@ -267,16 +253,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
         vinfo += ' - the car is safest of available';
       }
 
-      // Apply class for highlighting if safest
       const cardClass = isSafest ? 'card mb-2 p-2 safest-ride' : 'card mb-2 p-2';
 
-      // Updated button to call showBookingModal
       html += `<div class="${cardClass}"><strong>${r.origin_name} → ${r.dest_name}</strong><div class="smalltext">Depart: ${new Date(r.depart_time).toLocaleString()} | Seats: ${r.seats_available} | Price: ${r.price_per_seat}</div><div style="margin-top:8px"><button class="btn btn-primary" onclick="showBookingModal('${r.id}')">Book</button></div><div class="smalltext">Driver: ${driver.name}</div><div class="smalltext">Vehicle: ${vinfo}</div></div>`;
     });
     resultsDiv.innerHTML = html;
   }
   
-  // Function to display the modal (no change in logic, just now asynchronous)
   window.showBookingModal = async function(rideId){
     const cur = app.currentUser();
     if(!cur) return window.location='login.html';
@@ -287,12 +270,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(!ride) return app.showNotification('Ride not found', 'danger');
     if(ride.seats_available<=0) return app.showNotification('No seats available', 'warning');
 
-    // Populate modal fields
     document.getElementById('modalRideId').value = rideId;
     document.getElementById('seatsToBook').max = ride.seats_available;
     document.getElementById('seatsToBook').value = 1;
 
-    // Populate detailed ride information
     const driver = ride.driver || {name:'Driver'};
     const vinfo = ride.vehicle_company ? `${ride.vehicle_company} ${ride.vehicle_model} (${ride.vehicle_safety_rating})` : 'N/A';
 
@@ -310,12 +291,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementById('rideDetailsContent').innerHTML = rideDetailsHtml;
     document.getElementById('seatsAvailableText').textContent = `${ride.seats_available}`;
 
-    // Show the modal
     const modal = new bootstrap.Modal(seatBookingModal);
     modal.show();
   }
 
-  // Handles the modal form submission
   if(seatBookingForm){
     seatBookingForm.addEventListener('submit', async (e)=>{
       e.preventDefault();
@@ -330,17 +309,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
       
       const bookingData = {
           ride_id: rideId,
-          passenger_id: cur.id, // Django expects User PK
+          passenger_id: cur.id,
           seats_booked: requestedSeats,
           status:'confirmed',
           payment_mode:'offline',
       };
       
       try {
-          // POST to Django API booking endpoint
           await app.saveData(BOOKINGS_ENDPOINT, bookingData);
           
-          // Hide modal and show success
           const modal = bootstrap.Modal.getInstance(seatBookingModal);
           if(modal) modal.hide();
           
@@ -351,7 +328,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
           await renderMyBookings();
           
       } catch (error) {
-          // Display detailed error from Django 
           app.showNotification(error.message, 'danger');
       }
     });
@@ -361,12 +337,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   async function renderMyBookings(){
     if(!myBookingsDiv) return;
     const cur = app.currentUser();
-    
-    // Fetch all bookings for the current user
     const allBookings = await app.getData(BOOKINGS_ENDPOINT, { passenger_id: cur.id });
     if(!allBookings.length) { myBookingsDiv.innerHTML = '<p class="smalltext">No bookings yet.</p>'; return; }
-    
-    // Fetch all rides to match booking IDs to ride details
     const allRides = await app.getData(RIDES_ENDPOINT, { status: 'all' });
     
     let html = '<table class="table"><tr><th>Ride</th><th>When</th><th>Seats</th><th>Status</th><th>Action</th></tr>';

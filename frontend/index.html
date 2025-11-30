@@ -6,6 +6,27 @@
   <title>Home - Carpooling</title>
   <link href="bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-image: url("../1.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    footer {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 10px 0;
+      text-align: center;
+      font-size: 0.9em;
+      color: #333;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+      box-shadow: 0 -1px 5px rgba(0,0,0,0.1);
+      z-index: 1030;
+    }
+  </style>
 </head>
 <body>
   <div id="notificationContainer" class="fixed-top p-3" style="z-index: 1050;"></div>
@@ -48,7 +69,114 @@
         </div>
       </div>
     </div>
+<section id="about-us" class="mt-5">
+  <style>
+    #about-us {
+      margin-top: 40px;
+    }
+    .about-card {
+      background: white;
+      border-radius: 14px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .about-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .about-title {
+      margin-bottom: 15px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+    }
+    .about-text {
+      margin-bottom: 14px;
+      line-height: 1.55;
+      color: #555;
+      font-size: 16px;
+    }
+  </style>
+
+  <div class="about-card">
+    <h2 class="about-title">About Us</h2>
+
+    <p class="about-text">We’re a simple, reliable, eco-friendly carpooling platform built to make everyday travel easier.</p>
+    <p class="about-text">Our goal is to connect people heading in the same direction to save money and reduce traffic.</p>
+    <p class="about-text">Booking or offering a ride is fast, transparent, and user-friendly.</p>
+    <p class="about-text">We promote community-driven travel that cuts fuel use and lowers pollution.</p>
+    <p class="about-text">Join us in making transportation smarter and greener for everyone.</p>
+  </div>
+</section>
+
+
+    <!-- Testimonials Section -->
+<section id="testimonials" class="mt-5">
+  <style>
+    #testimonials {
+      margin-top: 40px;
+    }
+    .testimonials-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 10px;
+    }
+    .testimonial-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 15px;
+      color: #444;
+    }
+    .testimonial-user {
+      font-weight: bold;
+      text-align: right;
+      color: #666;
+    }
+  </style>
+
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title mb-4">What Our Users Say</h2>
+
+      <div class="testimonials-container">
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Saved so much money traveling to college each day! Super convenient and always reliable."</p>
+          <p class="testimonial-user">– Student User</p>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">"I started offering rides on weekends and it’s been a great way to meet people while sharing fuel costs."</p>
+          <p class="testimonial-user">– Ride Provider</p>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Booking a ride takes less than a minute. The platform is simple and has made my daily office commute stress-free."</p>
+          <p class="testimonial-user">– Working Professional</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
   </main>
+
+  <footer>
+    For complaints, please write to: <a href="mailto:gjaswanth7780@gmail.com">gjaswanth7780@gmail.com</a>
+  </footer>
 
   <script src="bootstrap.bundle.min.js"></script>
   <script src="home.js"></script>

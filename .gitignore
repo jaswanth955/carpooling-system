@@ -1,0 +1,31 @@
+# Python/Django
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+*.sqlite3
+*.log
+*.pot
+*.pyc
+
+# VS Code
+.vscode/
+
+# Windows/Mac
+Thumbs.db
+.DS_Store
+
+# Node / frontend
+node_modules/
+dist/
+build/
+
+# IDE
+.idea/
+*.swp
+
+# Env files
+.env
+.env.local

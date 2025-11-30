@@ -6,6 +6,14 @@
   <title>Driver - Carpooling</title>
   <link href="bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-image: url("../6.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  </style>
 </head>
 <body>
   <div id="notificationContainer" class="fixed-top p-3" style="z-index: 1050;"></div>
@@ -37,7 +45,7 @@
         </div>
         <div class="mb-3">
           <label class="form-label">Total seats</label>
-          <input class="form-control" type="number" id="total_seats" min="1" value="3">
+          <input class="form-control" type="number" id="total_seats" min="1" max="4" value="3">
         </div>
         <div class="mb-3">
           <label class="form-label">Price per seat</label>
